@@ -1,0 +1,46 @@
+name: TataSky Daily Update
+on:
+  push:
+    branches:
+      - master
+  schedule:
+    - cron: '0 */12 * * *'
+  workflow_dispatch:
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 4
+      matrix:
+        python-version: [3.9]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+    - name: Modified by TechieSneh
+      run: |
+        python -m pip install --upgrade pip
+        pip install requests
+    - name: TS Daily Loop  
+      run: |
+
+                       git config --global user.name "imsahilpr"
+                       git config --global user.email "ak2praj@gmail.com"
+                       git clone https://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@github.com/imsahilpr/MyTataSky-Daily
+                       cd MyTataSky-Daily/code_samples
+                       chmod 755 *
+                       sudo apt-get install expect -y
+                       ./TSlogin.exp
+                       git clone https://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@gist.github.com/47b0a521f0917629bffc8f58826b3b67
+                       rm 47b0a521f0917629bffc8f58826b3b67/mytatasky.m3u
+                       mv *.m3u 47b0a521f0917629bffc8f58826b3b67/
+                       cd 47b0a521f0917629bffc8f58826b3b67
+                       git add .
+                       git commit -m "Playlist has been updated."
+                       git push
+                       exit
